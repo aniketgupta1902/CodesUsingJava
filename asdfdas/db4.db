@@ -1,0 +1,178 @@
+-- phpMyAdmin SQL Dump
+-- version 4.9.0.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Nov 07, 2019 at 03:34 PM
+-- Server version: 10.4.6-MariaDB
+-- PHP Version: 7.3.8
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `db4`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_1`
+--
+
+CREATE TABLE `customer_1` (
+  `CUST_NUM` int(10) NOT NULL,
+  `CUST_LNAME` varchar(10) NOT NULL,
+  `CUST_FNAME` varchar(10) NOT NULL,
+  `CUST_BALANCE` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer_1`
+--
+
+INSERT INTO `customer_1` (`CUST_NUM`, `CUST_LNAME`, `CUST_FNAME`, `CUST_BALANCE`) VALUES
+(1571, 'GUPTA', 'ANIKET', 69000),
+(1572, 'SRIVASTAVA', 'SHAURYA', 420),
+(1574, 'GUPTA', 'ADITYA', 9900),
+(1575, 'SANGWAN', 'DEVESH', 15000),
+(1579, 'BALYAN', 'ARNAV', 7800),
+(1584, 'PAL', 'MUKUL', 10000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_2`
+--
+
+CREATE TABLE `customer_2` (
+  `CUST_NUM` int(10) NOT NULL,
+  `CUST_LNAME` varchar(10) NOT NULL,
+  `CUST_FNAME` varchar(10) NOT NULL,
+  `CUST_BALANCE` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer_2`
+--
+
+INSERT INTO `customer_2` (`CUST_NUM`, `CUST_LNAME`, `CUST_FNAME`, `CUST_BALANCE`) VALUES
+(1001, 'WICK', 'JOHN', 7500),
+(1002, 'PONTING', 'RICKY', 10100),
+(1004, 'W', 'Sam', 3300),
+(1006, 'P', 'Aadarsh', 15000),
+(1572, 'SRIVASTAVA', 'SHAURYA', 420),
+(1584, 'PAL', 'MUKUL', 10000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice`
+--
+
+CREATE TABLE `invoice` (
+  `INV_NUM` int(10) NOT NULL,
+  `PROD_NUM` int(10) NOT NULL,
+  `UNIT_SOLD` int(5) NOT NULL,
+  `CUST_NUM` int(10) NOT NULL,
+  `INV_DATE` date NOT NULL,
+  `INV_AMOUNT` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`INV_NUM`, `PROD_NUM`, `UNIT_SOLD`, `CUST_NUM`, `INV_DATE`, `INV_AMOUNT`) VALUES
+(501, 102, 1, 1572, '2019-10-22', 40),
+(502, 104, 1, 1572, '2019-10-22', 50),
+(503, 106, 2, 1572, '2019-10-22', 300),
+(504, 101, 3, 1571, '2019-04-10', 60),
+(505, 105, 1, 1579, '2019-06-11', 200),
+(506, 103, 1, 1579, '2019-08-22', 500),
+(507, 108, 2, 1001, '2019-02-02', 60),
+(508, 105, 1, 1575, '2019-10-22', 200),
+(509, 102, 2, 1575, '2019-10-22', 80),
+(510, 107, 1, 1002, '2019-03-10', 200),
+(511, 108, 4, 1006, '2019-01-16', 120),
+(512, 106, 1, 1006, '2019-01-16', 150);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE `product` (
+  `PROD_NUM` int(10) NOT NULL,
+  `PROD_NAME` varchar(10) NOT NULL,
+  `PRICE` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`PROD_NUM`, `PROD_NAME`, `PRICE`) VALUES
+(101, 'Balloons', 20),
+(102, 'Rice', 40),
+(103, 'Shoes', 500),
+(104, 'Burger', 50),
+(105, 'Perfume', 200),
+(106, 'Cake', 150),
+(107, 'Hat', 200),
+(108, 'Biscuits', 30);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `customer_1`
+--
+ALTER TABLE `customer_1`
+  ADD PRIMARY KEY (`CUST_NUM`);
+
+--
+-- Indexes for table `customer_2`
+--
+ALTER TABLE `customer_2`
+  ADD PRIMARY KEY (`CUST_NUM`);
+
+--
+-- Indexes for table `invoice`
+--
+ALTER TABLE `invoice`
+  ADD PRIMARY KEY (`INV_NUM`),
+  ADD KEY `PROD_NUM` (`PROD_NUM`),
+  ADD KEY `CUST_NUM` (`CUST_NUM`);
+
+--
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`PROD_NUM`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `invoice`
+--
+ALTER TABLE `invoice`
+  ADD CONSTRAINT `invoice` FOREIGN KEY (`PROD_NUM`) REFERENCES `product` (`PROD_NUM`),
+  ADD CONSTRAINT `invoice_ibfk_3` FOREIGN KEY (`PROD_NUM`) REFERENCES `product` (`PROD_NUM`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
